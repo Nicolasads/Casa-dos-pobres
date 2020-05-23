@@ -12,7 +12,7 @@ export default function Home() {
     <View style={styles.container}>
       <Image source={require('../../assets/logo-vertical.png')} style={styles.logo} />
       <View style={styles.optionView}>
-          <Image source={require('../../assets/dinheiro.png')} style={styles.money}/>
+          <Image source={require('../../assets/dinehiro.png')} style={styles.money}/>
           <Text style={styles.title}>Em Dinheiro</Text>
           <Text style={styles.description}>Faça sua doação em dinheiro em <Text style={styles.bold}>Cartões
             de crédito débito online, boleto bancário,

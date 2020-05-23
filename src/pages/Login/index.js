@@ -23,16 +23,16 @@ export default function Login() {
       alert("Erro ao salvar token" + e)
     }
   }
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@CasaDosPobres:userToken')
-      if (value !== null) {
-        setJwt(value)
-      }
-    } catch (e) {
-      alert(e)
-    }
-  }
+  // const getData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('@CasaDosPobres:userToken') //pegando o tokendo do banco do celular
+  //     if (value !== null) {
+  //       setJwt(value)
+  //     }
+  //   } catch (e) {
+  //     alert(e)
+  //   }
+  // }
 
   const authenticate = async () => {
     if (login.length === 0 || pass.length === 0) {
@@ -52,10 +52,7 @@ export default function Login() {
 
       await saveUser(user)  // salvar dados no AsyncStorage
 
-      // const resetAction = StackActions.reset({
-      //   index: 0,
-      //   actions: [NavigationActions.navigate({ routeName: 'App' })],
-      // })
+      navigation.navigate('Home')
 
       setLoading(false);
 
