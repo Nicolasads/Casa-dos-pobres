@@ -19,9 +19,9 @@ export default function Home() {
   return(
     <ScrollView showsVerticalScrollIndicator={false} /* remover a barra de rolagem vertical */> 
     <View style={styles.container}>
-      <Image source={require('../../../assets/logo-vertical.png')} style={styles.logo} />
+      <Image source={require('../../assets/logo-vertical.png')} style={styles.logo} />
       <View style={styles.optionView}>
-          <Image source={require('../../../assets/dinheiro.png')} style={styles.money}/>
+          <Image source={require('../../assets/dinheiro.png')} style={styles.money}/>
 =======
   // async function deleteUser() {
   //   try {
