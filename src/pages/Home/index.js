@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Image, Text, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, Text, ScrollView, StatusBar } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +8,7 @@ import styles from './style';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function Home() {
+<<<<<<< HEAD
 
   const navigation = useNavigation();
 
@@ -21,6 +22,25 @@ export default function Home() {
       <Image source={require('../../../assets/logo-vertical.png')} style={styles.logo} />
       <View style={styles.optionView}>
           <Image source={require('../../../assets/dinheiro.png')} style={styles.money}/>
+=======
+  // async function deleteUser() {
+  //   try {
+  //     await AsyncStorage.setItem('@CasaDosPobres:userToken', null)
+
+  //   } catch (e) {
+  //     alert(e)
+  //   }
+  // }
+
+  return(
+    <ScrollView>
+      
+    <View style={styles.container}>
+    <StatusBar barStyle="light-content"/>
+      <Image source={require('../../assets/logo-vertical.png')} style={styles.logo} />
+      <View style={styles.optionView}>
+          <Image source={require('../../assets/dinehiro.png')} style={styles.money}/>
+>>>>>>> 4465a3d95a36e99a71df03f8324c113bc7293a50
           <Text style={styles.title}>Em Dinheiro</Text>
           <Text style={styles.description}>Faça sua doação em dinheiro em <Text style={styles.bold}>Cartões
             de crédito débito online, boleto bancário,

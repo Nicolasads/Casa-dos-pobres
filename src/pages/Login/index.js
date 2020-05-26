@@ -1,38 +1,19 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, AsyncStorage, ActivityIndicator } from 'react-native';
+import React, { useRef, useState, useContext } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StatusBar } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 
 import styles from './style';
-import api from '../../services/api'
+import AuthContext from '../../contexts/authContext'
 
 export default function Login() {
+  const {signIn} = useContext(AuthContext)
   const navigation = useNavigation();
   const passRef = useRef();
   const [login, setLogin] = useState('');
   const [pass, setPass] = useState('');
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
-  const [jwt, setJwt] = useState(null);
-
-  async function saveUser(user) {
-    try {
-      await AsyncStorage.setItem('@CasaDosPobres:userToken', JSON.stringify(user))
-    } catch (e) {
-      alert("Erro ao salvar token" + e)
-    }
-  }
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@CasaDosPobres:userToken')
-      if (value !== null) {
-        setJwt(value)
-      }
-    } catch (e) {
-      alert(e)
-    }
-  }
 
   const authenticate = async () => {
     if (login.length === 0 || pass.length === 0) {
@@ -46,30 +27,19 @@ export default function Login() {
         cpf: login,
         senha: pass
       };
-      const response = await api.post('doador/login', credentials);
-
-      setUser(response.data);
-
-      await saveUser(user)  // salvar dados no AsyncStorage
-
-      // const resetAction = StackActions.reset({
-      //   index: 0,
-      //   actions: [NavigationActions.navigate({ routeName: 'App' })],
-      // })
-
+      await signIn(credentials)
       setLoading(false);
-
-      // props.navigation.dispatch(resetAction)
     } catch (e) {
       console.log(e);
-      let error = e.response.data.error;
-      alert(error + " tente novamente")
+      alert(e + " tente novamente")
       setLoading(false);
     }
   }
 
   return (
+    
     <View style={styles.container}>
+        <StatusBar barStyle="light-content"/>
       <Text style={styles.header}>Entrar</Text>
       <View style={styles.form}>
         <TextInput style={styles.input}
