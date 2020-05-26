@@ -13,13 +13,15 @@ export default StyleSheet.create({
         height: 100,
     },
     optionView: {
+       borderRadius: 0,
        marginTop: 12,
        marginBottom: 20,
-       borderColor: '#999999',
-       borderWidth: 1,
-       borderRadius: 5,
        width: WIDTH - 40,
-       alignItems: "center"
+       alignItems: "center",
+       shadowOffset: {width: 0, height: 2,},
+       shadowOpacity: 0.25,
+       shadowRadius: 2.5,
+       elevation: 3,
     },
     money: {
         marginTop: 15,
