@@ -44,13 +44,14 @@ export default StyleSheet.create({
 
     //Input mais utilizado nos formulários onde ocupa a linha inteira
     inputPadrao: {
-        borderRadius: 12,
+        borderRadius: 18,
         width: WIDTH - 80,
         height: 50,
         fontSize: 16,
         backgroundColor: '#dedede',
         marginTop:10,
         padding: 8,
+        paddingLeft: 15,
     },
 
     /* ------ estilo dos campos DATA, HORA E QTD -------- */
@@ -65,48 +66,50 @@ export default StyleSheet.create({
     },
 
     inputData: {
-        borderRadius: 12,
+        borderRadius: 18,
         height: 50,
         fontSize: 16,
         backgroundColor: '#dedede',
         width: 105,
-        padding: 8,
+        paddingTop: 10,
+        paddingLeft: 15,
         flex: 2,
         marginRight: 7,
     },
 
     inputHora: {
-        borderRadius: 12,
+        borderRadius: 18,
         height: 50,
         fontSize: 16,
         backgroundColor: '#dedede',
-        //width: 105,
-        padding: 8,
+        paddingTop: 10,
+        paddingLeft: 15,
+        paddingLeft: 15,
         flex: 2,
         marginRight: 7,
     },
 
     inputQtd: {
-        borderRadius: 12,
+        borderRadius: 18,
         height: 50,
         fontSize: 16,
         backgroundColor: '#dedede',
-       // width: 50,
-        padding: 8,
+        paddingLeft: 15,
+        paddingTop:10,
         flex: 0.7,
     },
 
     //estilo do caampo item
 
     inputItem: {
-        borderRadius: 12,
+        borderRadius: 18,
         width: WIDTH - 80,
-        height: 50,
         fontSize: 16,
         backgroundColor: '#dedede',
         marginTop:10,
-        padding: 8,
-        height: 100,
+        paddingTop: 10,
+        height: 200,
+        paddingLeft: 15
     },
 
     /*---------- estilos referente ao campo dos botões no fim da página ---------*/
@@ -151,8 +154,8 @@ export default StyleSheet.create({
         fontSize: 16,
         backgroundColor: '#dedede',
         flex: 1,
-       // width: 50,
-        padding: 8,
+        paddingTop: 10,
+        paddingLeft: 15,
         marginRight: 3.5,
     },
 
@@ -164,6 +167,7 @@ export default StyleSheet.create({
         flex: 1,
        // width: 50,
         padding: 8,
+        paddingLeft: 15,
         marginLeft: 3.5,
     },
 });

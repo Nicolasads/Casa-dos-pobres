@@ -46,6 +46,7 @@ export default () =>  {
                         <AppStack.Screen name="Payment" component={Payment} />
                         <AppStack.Screen name="Finished" component={Finished} />
                         <AppStack.Screen name="Forgot" component={Forgot} />
+                        <AppStack.Screen name="Schedule" component={Schedule} />
                     </>
                 ) :
                     <>

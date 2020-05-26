@@ -61,7 +61,8 @@ export default function Schedule(){
                                 placeholderTextColor= '#999999'
                                 multiline={true}
                                 numberOfLines={4}
-                                placeholder= 'item'
+                                placeholder= 'Item'
+                                textAlignVertical="top"
                             />
                         </View>
 
