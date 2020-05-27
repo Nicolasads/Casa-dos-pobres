@@ -1,20 +1,130 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { View, Image, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { MaterialIcons} from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { TextInputMask } from 'react-native-masked-text'
 import { useNavigation } from "@react-navigation/native";
+import AuthContext from '../../contexts/authContext'
+import api from '../../services/api'
+import axios from 'axios'
 
 import style from './style';
 
-export default function Schedule(){
+export default function Schedule() {
     const navigation = useNavigation();
-    const [ loading, setLoading] = useState(false);
+    const dataRef = useRef();
+    const horaRef = useRef();
+    const qtdRef = useRef();
+    const itemRef = useRef();
+    const numeroContatoRef = useRef();
+    const cepRef = useRef();
+    const numeroRef = useRef();
+    const complementoRef = useRef();
 
-    function goBack(){
+    const {deleteJwt, jwt} = useContext(AuthContext);
+
+    const [loading, setLoading] = useState(false);
+    const [name, setName] = useState('');
+    const [date, setDate] = useState('');
+    const [cep, setCep] = useState('');
+    const [hour, setHour] = useState('');
+    const [amount, setAmount] = useState('');
+    const [item, setItem] = useState('');
+    const [contact, setContatc] = useState('');
+    const [state, setState] = useState('');
+    const [city, setCity] = useState('');
+    const [street, setStreet] = useState('');
+    const [neighborhood, setneighborhood] = useState('');
+    const [number, setNumber] = useState('');
+    const [complements, setComplemets] = useState('');
+
+
+
+
+    const authenticate = async () => {
+        // if (name.length === 0 || email.length === 0 || cpf.length === 0 || pass.length === 0) {
+        //   alert("Preencha os campos Vazios")
+        //   return
+        // }
+
+        setLoading(true);
+        try {
+            const crediacials = {
+                responsavel: name,
+                data: date,
+                cep: cep.replace("-", ''), 
+                hora: hour,
+                quantidade: amount,
+                tipoDoacao: 2,
+                item: item,
+                telefone: contact.replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, ''),
+                estado: state,
+                cidade: city,
+                logradouro: street,
+                bairro: neighborhood,
+                nuemero: number,
+                referencia: complements
+            }
+            const config = {
+                headers: {
+                'x-api-key' : jwt,
+                'Content-Type': 'application/json',
+                 Accept: 'application/json'}
+            }        
+            
+            // alert(JSON.stringify(crediacials.telefone))
+            const response = await api.post('doacao/agendar', crediacials, config);
+
+            if (response.data.error) {
+                alert(JSON.stringify(response.data))
+                //deleteJwt()
+            } else {
+                if (response.data) {
+                    alert(JSON.stringify(response.date.error + "ggg"))
+                    
+                }
+            }
+
+            setLoading(false);
+        } catch (e) {
+            console.log(e+"entrou cath");
+
+            //alert(e + " tente novamente")
+            setLoading(false);
+        }
+
+        // alert(JSON.stringify(crediacials))
+    }
+    async function cepApi(text) {
+        try {
+            let condition = text.length.toString();
+            setCep(text)
+            if (condition == 9) {
+                const response = await axios.get(`https://viacep.com.br/ws/${text}/json/ `)
+                setCep(text)
+                if (response.data.erro) {
+                    alert('Cep Invalido')
+                } else {
+                    if (response.data) {
+                        setStreet(response.data.logradouro)
+                        setneighborhood(response.data.bairro)
+                        setCity(response.data.localidade)
+                        setState(response.data.uf)
+
+                    }
+                }
+
+            }
+        } catch (e) {
+            alert("erro ao procurar cep" + e)
+        }
+    }
+
+    function goBack() {
         navigation.goBack();
     }
 
-    return(
+    return (
         <ScrollView showsVerticalScrollIndicator={false} /* remover a barra de rolagem vertical */ >
 
             <View style={style.container}>
@@ -23,34 +133,62 @@ export default function Schedule(){
 
                 <View style={style.box} /* bloco 1 com informações da doação */>
                     <Text style={style.textBox}> Agendamento da doação </Text>
-                    
+
                     <View style={style.form}>
                         <View /* Input nome do doador */>
                             <TextInput style={style.inputPadrao}
-                                placeholder= 'Doador responsável'
-                                placeholderTextColor= '#999999'
+                                placeholder='Doador responsável'
+                                placeholderTextColor='#999999'
+                                autoCapitalize="none"
+                                returnKeyType="next"
+                                onChangeText={(name) => setName(name)}
+                                onSubmitEditing={() => dataRef.current.focus()}
                             />
                         </View>
 
                         <View style={style.InputsLine} /* Bloco contendo 3 inputs (Data, Hora, Qtd) */ >
                             <View style={style.inputData} /* Input data */>
-                                <TextInput
-                                    placeholder= 'Data'
-                                    placeholderTextColor= '#999999'
+                                <TextInputMask
+                                    type={'datetime'}
+                                    options={{
+                                        format: 'DD/MM/YYYY'
+                                    }}
+                                    placeholder='Data'    
+                                    placeholderTextColor='#999999'
+                                    returnKeyType="next"
+                                    onChangeText={(date) => setDate(date)}
+                                    value={date}
+                                    ref={dataRef}
+                                    onSubmitEditing={() => horaRef.current.focus()}
                                 />
                             </View>
 
                             <View style={style.inputHora} /* Input hora */>
-                                <TextInput
-                                    placeholder= 'Hora'
-                                    placeholderTextColor= '#999999'
+                                <TextInputMask
+                                    type={'custom'}
+                                    options={{
+                                        mask: '99:99'
+                                    }}
+                                    placeholder='Hora'
+                                    placeholderTextColor='#999999'
+                                    keyboardType="numeric"
+                                    returnKeyType="next"
+                                    value={hour}
+                                    ref={horaRef}
+                                    onChangeText={(hour) => setHour(hour)}
+                                    //onSubmitEditing={() => qtdRef.current.focus()}
                                 />
                             </View>
 
                             <View style={style.inputQtd} /* Input quantidade */>
                                 <TextInput
-                                    placeholder= 'Qtd'
-                                    placeholderTextColor= '#999999'
+                                    placeholder='Qtd'
+                                    placeholderTextColor='#999999'
+                                    keyboardType="numeric"
+                                    returnKeyType="next"
+                                    ref={qtdRef}
+                                    onChangeText={(qtd) => setAmount(qtd)}
+                                    onSubmitEditing={() => itemRef.current.focus()}
                                 />
                             </View>
                         </View>
@@ -58,90 +196,143 @@ export default function Schedule(){
                         <View style={style.texte} /* Input item */>
                             <TextInput
                                 style={style.inputItem}
-                                placeholderTextColor= '#999999'
+                                placeholderTextColor='#999999'
                                 multiline={true}
                                 numberOfLines={4}
-                                placeholder= 'Item'
+                                placeholder='Item'
                                 textAlignVertical="top"
+                                returnKeyType="next"
+                                onChangeText={(item) => setItem(item)}
+                                ref={itemRef}
+                                onSubmitEditing={() => numeroContatoRef.current.focus()}
                             />
                         </View>
 
                         <View /* Input contato */>
-                            <TextInput style={[style.inputPadrao, {marginBottom: 25}]}
-                                placeholder= 'Número de contato'
-                                placeholderTextColor= '#999999'
+                            <TextInputMask style={[style.inputPadrao, { marginBottom: 25 }]}
+                                type={'custom'}
+                                options={{
+                                    mask: '(99) 999999999'
+                                }}
+                                placeholder='Número de contato'
+                                placeholderTextColor='#999999'
+                                keyboardType="numeric"
+                                returnKeyType="next"
+                                onChangeText={(contact) => setContatc(contact)}
+                                value={contact}
+                                ref={numeroContatoRef}
                             />
                         </View>
                     </View>
-                    
+
                 </View>
 
-                <View style={[style.box, {marginTop: 20}]} /* bloco 2 com as informações de endereço */ >
+                <View style={[style.box, { marginTop: 20 }]} /* bloco 2 com as informações de endereço */ >
                     <Text style={style.textBox}> Endereço da doação </Text>
-                    
+
                     <View style={style.form}>
                         <View /* Input Cep */>
-                            <TextInput style={style.inputPadrao}
-                                placeholder= 'CEP'
-                                placeholderTextColor= '#999999'
+                            <TextInputMask style={style.inputPadrao}
+                                type={'custom'}
+                                options={{
+                                    mask: '99999-999'
+                                }}
+                                placeholder='CEP'
+                                placeholderTextColor='#999999'
+                                keyboardType="numeric"
+                                returnKeyType="next"
+                                onChangeText={text => cepApi(text)}
+                                value={cep}
+                                ref={cepRef}
+                                onSubmitEditing={() => numeroRef.current.focus()}
                             />
                         </View>
 
-                        <View /* Input Estado */>
+                        <View /* Input Logradouro */>
                             <TextInput style={style.inputPadrao}
-                               placeholder= 'Estado'
-                               placeholderTextColor= '#999999'
-                                />
+                                placeholder='Logradouro'
+                                placeholderTextColor='#999999'
+                                autoCapitalize="none"
+                                returnKeyType="next"
+                                onChangeText={(street) => setState(street)}
+                                value={street}
+                            />
+                        </View>
+
+                        <View /* Input bairro */>
+                            <TextInput style={style.inputPadrao}
+                                placeholder="Bairro"
+                                placeholderTextColor='#999999'
+                                autoCapitalize="none"
+                                returnKeyType="next"
+                                onChangeText={(a) => setneighborhood(a) }
+                                value={neighborhood}
+                            />
                         </View>
 
                         <View /* Input Cidade */>
                             <TextInput style={style.inputPadrao}
-                                placeholder= 'Cidade'
-                                placeholderTextColor= '#999999'
+                                placeholder="Cidade"
+                                placeholderTextColor='#999999'
+                                autoCapitalize="none"
+                                returnKeyType="next"
+                                onChangeText={(city) => setCity(city)}
+                                value={city}
                             />
                         </View>
 
-                        <View style={style.InputsLine} /* Bloco contendo 2 inputs (Logradouro, Número)*/ >
-                            <View style={style.inputLogradouro} /* Input logradouro */>
+                        <View style={style.InputsLine} /* Bloco contendo 2 inputs (estado, Número)*/ >
+                            <View style={style.inputLogradouro} /* Input estado*/>
                                 <TextInput
-                                    placeholder= 'Logradouro'
-                                    placeholderTextColor= '#999999'
+                                    placeholder='Estado'
+                                    placeholderTextColor='#999999'
+                                    autoCapitalize="none"
+                                    returnKeyType="next"
+                                    onChangeText={(state) => setState(state)}
+                                    value={state}
                                 />
                             </View>
 
                             <View style={style.inputNumero} /* Input número */>
                                 <TextInput
-                                    placeholder= 'Número'
-                                    placeholderTextColor= '#999999'
+                                    placeholder='Número'
+                                    placeholderTextColor='#999999'
+                                    keyboardType="numeric"
+                                    returnKeyType="next"
+                                    onChangeText={(number) => setNumber(number)}
+                                    ref={numeroRef}
+                                    onSubmitEditing={() => complementoRef.current.focus()}
                                 />
                             </View>
                         </View>
 
                         <View /* input Complemtento */ >
-                            <TextInput style={[style.inputPadrao, {marginBottom: 25}]}
-                                placeholder= 'Complemento'
-                                placeholderTextColor= '#999999'
-                                />
+                            <TextInput style={[style.inputPadrao, { marginBottom: 25 }]}
+                                placeholder='Complemento'
+                                placeholderTextColor='#999999'
+                                onChangeText={(comp) => setComplemets(comp)}
+                                ref={complementoRef}
+                            />
                         </View>
                     </View>
-                 </View>
+                </View>
 
                 <View style={style.buttomBox} /* Campo dos botões da tela */ >
                     <View>
-                        <TouchableOpacity onPress={ goBack } /* Botão voltar */ >
+                        <TouchableOpacity onPress={goBack} /* Botão voltar */ >
                             <LinearGradient colors={['#81bd3c', '#629648', '#106b34']}
-                                start={[1, 1.5]} end={[0.1 , 1.3]} style={style.buttomBack}>
+                                start={[1, 1.5]} end={[0.1, 1.3]} style={style.buttomBack}>
                                 <MaterialIcons name="keyboard-arrow-left" size={30} color="white" />
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>
 
                     <View >
-                        <TouchableOpacity onPress={() => {} } /* Botão de proceguir */ >
+                        <TouchableOpacity onPress={() => authenticate()} /* Botão de proceguir */ >
                             <LinearGradient colors={['#81bd3c', '#629648', '#106b34']}
-                                start={[1.1, 1.9]} end={[0.2 , 1.1]} style={style.buttomTerminate} >
-                                    {loading ? <ActivityIndicator size="small" color="#fff" />
-                                        : <Text style={style.terminateText}>Concluir Agendamento</Text>}
+                                start={[1.1, 1.9]} end={[0.2, 1.1]} style={style.buttomTerminate} >
+                                {loading ? <ActivityIndicator size="small" color="#fff" />
+                                    : <Text style={style.terminateText}>Concluir Agendamento</Text>}
                             </LinearGradient >
                         </TouchableOpacity>
                     </View>

@@ -2,12 +2,25 @@ import React, { createContext, useState } from 'react'
 import { AsyncStorage } from 'react-native'
 import api from '../services/api'
 
-const AuthContext = createContext({ logged: false, signIn: () => {}, setLogged: () => {}, setJwt: () => {}, jwt: "" })
+const AuthContext = createContext({ logged: false, signIn: () => {}, setLogged: () => {}, setJwt: () => {}, jwt: "", deleteJwt: () => {} })
 
 export const AuthProvider = ({ children }) => { // passando o filhos para dentro do fx
     const [user, setUser] = useState(null)
     const [logged, setLogged] = useState(false)
     const [ jwt, setJwt ] = useState('')
+
+    async function deleteJwt(){ 
+            try {
+              await AsyncStorage.removeItem('@CasaDosPobres:userToken') //pegando o tokendo do banco do celular
+              const token = await AsyncStorage.getItem('@CasaDosPobres:userToken') //pegando o tokendo do banco do celular
+              
+              if(token == null) {
+                setLogged(false)    
+              }
+            } catch (e){
+              alert(e)
+            }
+    }
     
     async function saveUser(jwt = null) {
         try {
@@ -46,7 +59,7 @@ export const AuthProvider = ({ children }) => { // passando o filhos para dentro
 
     }
     return (
-        <AuthContext.Provider value={{ logged, signIn, user, setLogged, setJwt, jwt}}>
+        <AuthContext.Provider value={{ logged, signIn, user, setLogged, setJwt, jwt, deleteJwt}}>
             {children}
         </AuthContext.Provider>
     )
