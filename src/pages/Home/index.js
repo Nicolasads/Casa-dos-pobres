@@ -10,8 +10,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function Home() {
   const navigation = useNavigation();
 
-  function goSchedule(){ //vai para tela de registro de doação
-    navigation.navigate('Schedule');
+  function goDonate(){ //vai para tela de registro de doação
+    navigation.navigate('Donate');
   }
 
   function goPayment() {
@@ -49,6 +49,7 @@ export default function Home() {
           </TouchableOpacity>
         </View>
       </View>
+
       <View style={styles.optionView}>
           <Image source={require('../../../assets/outros.png')} style={styles.others}/>
 
@@ -59,14 +60,15 @@ export default function Home() {
           
           <Text style={styles.description}>Ou entregue sua
             contribuição financeira em mãos.</Text>
-        <View style={styles.proceed}>
-          <TouchableOpacity onPress={goSchedule}>
-            <LinearGradient colors={['#81bd3c', '#629648', '#106b34']} start={[1, 1.5]} end={[0.1 , 1.3]} style={styles.buttom} >
-              <MaterialIcons name="keyboard-arrow-right" size={30} color="white" />
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.proceed}>
+            <TouchableOpacity onPress={goDonate}>
+              <LinearGradient colors={['#81bd3c', '#629648', '#106b34']} start={[1, 1.5]} end={[0.1 , 1.3]} style={styles.buttom} >
+                <MaterialIcons name="keyboard-arrow-right" size={30} color="white" />
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
       </View>
+
     </View>
   </ScrollView>
   );

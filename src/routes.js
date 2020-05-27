@@ -14,7 +14,8 @@ import Payment from './pages/Payment';
 import Finished from './pages/Login';
 import Forgot from './pages/Forgot';
 import Schedule from './pages/Schedule';
-
+import Financial from './pages/Financial';
+import Food from './pages/Food';
 
 const AppStack = createStackNavigator();
 
@@ -47,6 +48,8 @@ export default () =>  {
                         <AppStack.Screen name="Finished" component={Finished} />
                         <AppStack.Screen name="Forgot" component={Forgot} />
                         <AppStack.Screen name="Schedule" component={Schedule} />
+                        <AppStack.Screen name="Financial" component={Financial} />
+                        <AppStack.Screen name="Food" component={Food} />
                     </>
                 ) :
                     <>

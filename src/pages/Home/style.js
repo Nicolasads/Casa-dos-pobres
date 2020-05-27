@@ -63,5 +63,8 @@ export default StyleSheet.create({
         width: 280,
         height: 80,
         alignItems: 'center'
+    },
+    scrollHorizontal:{
+        marginRight: 12,
     }
 });

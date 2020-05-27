@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import style from './style';
 
-export default function Schedule(){
+export default function Financial(){
     const navigation = useNavigation();
     const [ loading, setLoading] = useState(false);
 
@@ -49,7 +49,8 @@ export default function Schedule(){
 
                             <View style={style.inputQtd} /* Input quantidade */>
                                 <TextInput
-                                    placeholder= 'Qtd'
+                                    keyboardType={"numeric"}
+                                    placeholder= 'Vlr'
                                     placeholderTextColor= '#999999'
                                 />
                             </View>
@@ -87,11 +88,18 @@ export default function Schedule(){
                             />
                         </View>
 
-                        <View /* Input Estado */>
+                        <View /* Input Logradouro */>
                             <TextInput style={style.inputPadrao}
-                               placeholder= 'Estado'
+                               placeholder= 'Logradouro'
                                placeholderTextColor= '#999999'
                                 />
+                        </View>
+
+                        <View /* Input Bairro */>
+                            <TextInput style={style.inputPadrao}
+                                placeholder= 'Bairro'
+                                placeholderTextColor= '#999999'
+                            />
                         </View>
 
                         <View /* Input Cidade */>
@@ -102,15 +110,16 @@ export default function Schedule(){
                         </View>
 
                         <View style={style.InputsLine} /* Bloco contendo 2 inputs (Logradouro, Número)*/ >
-                            <View style={style.inputLogradouro} /* Input logradouro */>
+                            <View style={style.inputEstado} /* Input logradouro */>
                                 <TextInput
-                                    placeholder= 'Logradouro'
+                                    placeholder= 'Estado'
                                     placeholderTextColor= '#999999'
                                 />
                             </View>
 
                             <View style={style.inputNumero} /* Input número */>
                                 <TextInput
+                                    keyboardType={"numeric"}
                                     placeholder= 'Número'
                                     placeholderTextColor= '#999999'
                                 />
