@@ -1,8 +1,10 @@
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import { View, Image, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { MaterialIcons} from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import { TextInputMask } from 'react-native-masked-text';
+
 
 import style from './style';
 
@@ -35,6 +37,7 @@ export default function Financial(){
                         <View style={style.InputsLine} /* Bloco contendo 3 inputs (Data, Hora, Qtd) */ >
                             <View style={style.inputData} /* Input data */>
                                 <TextInput
+                                    keyboardType={"numeric"}
                                     placeholder= 'Data'
                                     placeholderTextColor= '#999999'
                                 />
@@ -42,6 +45,7 @@ export default function Financial(){
 
                             <View style={style.inputHora} /* Input hora */>
                                 <TextInput
+                                    keyboardType={"numeric"}
                                     placeholder= 'Hora'
                                     placeholderTextColor= '#999999'
                                 />
@@ -50,7 +54,7 @@ export default function Financial(){
                             <View style={style.inputQtd} /* Input quantidade */>
                                 <TextInput
                                     keyboardType={"numeric"}
-                                    placeholder= 'Vlr'
+                                    placeholder= 'Valor'
                                     placeholderTextColor= '#999999'
                                 />
                             </View>
@@ -69,6 +73,7 @@ export default function Financial(){
 
                         <View /* Input contato */>
                             <TextInput style={[style.inputPadrao, {marginBottom: 25}]}
+                                keyboardType={"numeric"}
                                 placeholder= 'Número de contato'
                                 placeholderTextColor= '#999999'
                             />
@@ -83,6 +88,7 @@ export default function Financial(){
                     <View style={style.form}>
                         <View /* Input Cep */>
                             <TextInput style={style.inputPadrao}
+                                keyboardType={"numeric"}
                                 placeholder= 'CEP'
                                 placeholderTextColor= '#999999'
                             />

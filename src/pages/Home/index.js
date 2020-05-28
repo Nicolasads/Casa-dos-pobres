@@ -15,7 +15,11 @@ export default function Home() {
   }
 
   function goPayment() {
-    navigation.navigate('Payment')
+    navigation.navigate('Payment');
+  }
+
+  function goInfo() {
+    navigation.navigate('Info');
   }
   // async function deleteUser() {
   //   try {
@@ -68,7 +72,12 @@ export default function Home() {
             </TouchableOpacity>
           </View>
       </View>
-
+      <View style={styles.showInfo}>
+        <Text style={styles.infoText}>Saiba mais sobre a</Text>
+        <TouchableOpacity onPress={goInfo}>
+          <Text style={styles.buttomInfo}>Casa dos Pobres</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   </ScrollView>
   );
