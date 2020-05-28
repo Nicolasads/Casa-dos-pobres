@@ -14,7 +14,7 @@ export default function Schedule() {
     const navigation = useNavigation();
 
 
-    const { deleteJwt } = useContext(AuthContext);
+    const { deleteJwt, setUser } = useContext(AuthContext);
 
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
@@ -61,10 +61,12 @@ export default function Schedule() {
             
             const response = await api.post('doacao/agendar', crediacials);
             if (response.data.error) {
-                alert(JSON.stringify(response.data))
+                alert(JSON.stringify(response.data.error))
                 deleteJwt()
             } else {
-                alert(JSON.stringify(response.data))
+                setUser(response.data.agendamento.responsavel)
+                navigation.navigate('Finished')
+                
             }
 
             setLoading(false);

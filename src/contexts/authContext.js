@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react'
 import { AsyncStorage } from 'react-native'
 import api from '../services/api'
 
-const AuthContext = createContext({ logged: false, signIn: () => {}, setLogged: () => {}, setJwt: () => {}, jwt: "", deleteJwt: () => {} })
+const AuthContext = createContext({ logged: false, signIn: () => {}, setLogged: () => {}, setJwt: () => {}, jwt: "", deleteJwt: () => {}, setUser: () => {}, user: "" })
 
 export const AuthProvider = ({ children }) => { // passando o filhos para dentro do fx
     const [user, setUser] = useState(null)
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => { // passando o filhos para dentro
                 api.defaults.headers['x-api-key'] = jwt
                 setLogged(true)
             } else {
-                alert(jwt)
+                alert("Erro ao fazer login")
             }
         } catch (e) {
             return alert("Erro ao salvar token" + e)
@@ -42,8 +42,6 @@ export const AuthProvider = ({ children }) => { // passando o filhos para dentro
             const response = await api.post('doador/login', credentials);
             //setUser(response.data);
             if (response.data.jwt) {
-                alert(response.data.jwt)   
-                //alert(response.data.jwt)
                 await saveUser(response.data.jwt)  // salvar dados no AsyncStorage
             } else {
                 if (response.data.error) {
@@ -60,7 +58,7 @@ export const AuthProvider = ({ children }) => { // passando o filhos para dentro
 
     }
     return (
-        <AuthContext.Provider value={{ logged, signIn, user, setLogged, setJwt, jwt, deleteJwt}}>
+        <AuthContext.Provider value={{ logged, signIn, user, setLogged, setJwt, jwt, deleteJwt, setUser}}>
             {children}
         </AuthContext.Provider>
     )

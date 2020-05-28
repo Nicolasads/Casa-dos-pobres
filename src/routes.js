@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AsyncStorage } from 'react-native'
@@ -12,7 +12,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Donate from './pages/Donate';
 import Payment from './pages/Payment';
-import Finished from './pages/Login';
+import Finished from './pages/Finished';
 import Forgot from './pages/Forgot';
 import Schedule from './pages/Schedule';
 import Financial from './pages/Financial';
@@ -22,7 +22,7 @@ import Info from './pages/Info';
 const AppStack = createStackNavigator();
 
 export default () =>  {
-    const { logged, setLogged, setJwt} = useContext(AuthContext)
+    const { logged, setLogged, setJwt, deleteJwt} = useContext(AuthContext)
     
   
     const getData = async () => {
@@ -33,7 +33,6 @@ export default () =>  {
           api.defaults.headers['x-api-key'] = token
           setJwt(token)
           setLogged(true)
-          
         }
       } catch (e) {
         alert(e)

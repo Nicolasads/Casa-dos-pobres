@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Image, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { MaterialIcons} from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -13,7 +13,7 @@ import api from '../../services/api'
 
 export default function Financial(){
     const navigation = useNavigation();
-    const { deleteJwt, jwt } = useContext(AuthContext);
+    const { deleteJwt, setUser, logged } = useContext(AuthContext);
 
     const [ loading, setLoading] = useState(false);
     const [name, setName] = useState('');
@@ -60,10 +60,11 @@ export default function Financial(){
             const response = await api.post('doacao/agendar', crediacials);
             // alert(JSON.stringify(response.data))
             if (response.data.error) {
-                alert(JSON.stringify(response.data))
+                alert(JSON.stringify(response.data.error))
                  deleteJwt()
             } else {
-                alert(JSON.stringify(response.data))
+                setUser(response.data.agendamento.responsavel)
+                navigation.navigate('Finished')
             }
 
             setLoading(false);
@@ -102,7 +103,6 @@ export default function Financial(){
     function goBack(){
         navigation.goBack();
     }
-
     return(
         <ScrollView showsVerticalScrollIndicator={false} /* remover a barra de rolagem vertical */ >
 
