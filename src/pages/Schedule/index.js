@@ -1,5 +1,5 @@
-import React, { useState, useRef, useContext } from 'react';
-import { View, Image, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, AsyncStorage } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, Image, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator} from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { TextInputMask } from 'react-native-masked-text'
