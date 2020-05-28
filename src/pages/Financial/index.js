@@ -4,14 +4,101 @@ import { MaterialIcons} from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { TextInputMask } from 'react-native-masked-text';
+import axios from 'axios'
 
 
 import style from './style';
+import AuthContext from '../../contexts/authContext'
+import api from '../../services/api'
 
 export default function Financial(){
     const navigation = useNavigation();
-    const [ loading, setLoading] = useState(false);
+    const { deleteJwt, jwt } = useContext(AuthContext);
 
+    const [ loading, setLoading] = useState(false);
+    const [name, setName] = useState('');
+    const [date, setDate] = useState('');
+    const [hour, setHour] = useState('');
+    const [value, setValue] = useState('');
+    const [item, setItem] = useState('');
+    const [contact, setContatc] = useState('');
+    const [cep, setCep] = useState('');
+    const [street, setStreet] = useState('');
+    const [neighborhood, setneighborhood] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [number, setNumber] = useState('');
+    const [complements, setComplemets] = useState('');
+
+    const authenticate = async () => {
+        if(name === '' || date === '' || hour === '' || value === '' ||
+            item === '' || contact === ''|| cep === '' || street === '' ||
+            neighborhood === '' || city === ''|| state === '' || number === ''
+            || complements === ''
+        ){
+            alert("Preencha os campos vazios")
+            return
+        }
+        setLoading(true);
+        try {
+            const crediacials = {
+                responsavel: name,
+                data: date,
+                cep: cep.replace("-", ''), 
+                hora: hour,
+                quantidade: value.replace('R$', ''),
+                tipoDoacao: 1,
+                item: item,
+                telefone: contact.replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, ''),
+                estado: state,
+                cidade: city,
+                logradouro: street,
+                bairro: neighborhood,
+                nuemero: number,
+                referencia: complements
+            }
+            const response = await api.post('doacao/agendar', crediacials);
+            // alert(JSON.stringify(response.data))
+            if (response.data.error) {
+                alert(JSON.stringify(response.data))
+                 deleteJwt()
+            } else {
+                alert(JSON.stringify(response.data))
+            }
+
+            setLoading(false);
+        } catch (e) {
+            console.log(e+"entrou cath");
+
+            //alert(e + " tente novamente")
+            setLoading(false);
+        }
+
+    }
+    
+    async function cepApi(text) {
+        try {
+            let condition = text.length.toString();
+            setCep(text)
+            if (condition == 9) {
+                const response = await axios.get(`https://viacep.com.br/ws/${text}/json/ `)
+                setCep(text)
+                if (response.data.erro) {
+                    alert('Cep Invalido')
+                } else {
+                    if (response.data) {
+                        setStreet(response.data.logradouro)
+                        setneighborhood(response.data.bairro)
+                        setCity(response.data.localidade)
+                        setState(response.data.uf)
+                    }
+                }
+
+            }
+        } catch (e) {
+            alert("erro ao procurar cep" + e)
+        }
+    }
     function goBack(){
         navigation.goBack();
     }
@@ -31,31 +118,54 @@ export default function Financial(){
                             <TextInput style={style.inputPadrao}
                                 placeholder= 'Doador responsável'
                                 placeholderTextColor= '#999999'
+                                onChangeText={(name) => setName(name)}
                             />
                         </View>
 
                         <View style={style.InputsLine} /* Bloco contendo 3 inputs (Data, Hora, Qtd) */ >
                             <View style={style.inputData} /* Input data */>
-                                <TextInput
+                                <TextInputMask
+                                    type={'datetime'}
+                                    options={{
+                                        format: 'DD/MM/YYYY'
+                                    }}
                                     keyboardType={"numeric"}
                                     placeholder= 'Data'
                                     placeholderTextColor= '#999999'
+                                    onChangeText={(date) => setDate(date)}
+                                    value={date}
                                 />
                             </View>
 
                             <View style={style.inputHora} /* Input hora */>
-                                <TextInput
+                                <TextInputMask
+                                    type={'custom'}
+                                    options={{
+                                        mask: '99:99'
+                                    }}
                                     keyboardType={"numeric"}
                                     placeholder= 'Hora'
                                     placeholderTextColor= '#999999'
+                                    onChangeText={(hour) => setHour(hour)}
+                                    value={hour}
                                 />
                             </View>
 
                             <View style={style.inputQtd} /* Input quantidade */>
-                                <TextInput
+                                <TextInputMask
+                                    type={'money'}
+                                    options={{
+                                        precision: 2,
+                                        separator: ',',
+                                        delimiter: '.',
+                                        unit: 'R$',
+                                        suffixUnit: ''
+                                      }}
                                     keyboardType={"numeric"}
                                     placeholder= 'Valor'
                                     placeholderTextColor= '#999999'
+                                    onChangeText={(value) => setValue(value)}
+                                    value={value}
                                 />
                             </View>
                         </View>
@@ -68,14 +178,22 @@ export default function Financial(){
                                 numberOfLines={4}
                                 placeholder= 'Item'
                                 textAlignVertical="top"
+                                autoCapitalize="none"
+                                onChangeText={(item) => setItem(item)}
                             />
                         </View>
 
                         <View /* Input contato */>
-                            <TextInput style={[style.inputPadrao, {marginBottom: 25}]}
+                            <TextInputMask style={[style.inputPadrao, {marginBottom: 25}]}
+                                 type={'custom'}
+                                 options={{
+                                     mask: '(99) 999999999'
+                                 }}
                                 keyboardType={"numeric"}
                                 placeholder= 'Número de contato'
                                 placeholderTextColor= '#999999'
+                                onChangeText={(contact) => setContatc(contact)}
+                                value={contact}
                             />
                         </View>
                     </View>
@@ -87,10 +205,16 @@ export default function Financial(){
                     
                     <View style={style.form}>
                         <View /* Input Cep */>
-                            <TextInput style={style.inputPadrao}
+                            <TextInputMask style={style.inputPadrao}
+                                 type={'custom'}
+                                 options={{
+                                     mask: '99999-999'
+                                 }}
                                 keyboardType={"numeric"}
                                 placeholder= 'CEP'
                                 placeholderTextColor= '#999999'
+                                onChangeText={(cep) => cepApi(cep)}
+                                value={cep}
                             />
                         </View>
 
@@ -98,6 +222,8 @@ export default function Financial(){
                             <TextInput style={style.inputPadrao}
                                placeholder= 'Logradouro'
                                placeholderTextColor= '#999999'
+                               onChangeText={(street) => setStreet(street)}
+                               value={street}
                                 />
                         </View>
 
@@ -105,6 +231,8 @@ export default function Financial(){
                             <TextInput style={style.inputPadrao}
                                 placeholder= 'Bairro'
                                 placeholderTextColor= '#999999'
+                                onChangeText={(neighborhood) => setneighborhood(neighborhood)}
+                                value={neighborhood}
                             />
                         </View>
 
@@ -112,6 +240,8 @@ export default function Financial(){
                             <TextInput style={style.inputPadrao}
                                 placeholder= 'Cidade'
                                 placeholderTextColor= '#999999'
+                                onChangeText={(city) => setCity(city)}
+                                value={city}
                             />
                         </View>
 
@@ -120,6 +250,8 @@ export default function Financial(){
                                 <TextInput
                                     placeholder= 'Estado'
                                     placeholderTextColor= '#999999'
+                                    onChangeText={(state) => setState(state)}
+                                    value={state}
                                 />
                             </View>
 
@@ -128,6 +260,7 @@ export default function Financial(){
                                     keyboardType={"numeric"}
                                     placeholder= 'Número'
                                     placeholderTextColor= '#999999'
+                                    onChangeText={(number) => setNumber(number)}
                                 />
                             </View>
                         </View>
@@ -136,6 +269,7 @@ export default function Financial(){
                             <TextInput style={[style.inputPadrao, {marginBottom: 25}]}
                                 placeholder= 'Complemento'
                                 placeholderTextColor= '#999999'
+                                onChangeText={(complements) => setComplemets(complements)}
                                 />
                         </View>
                     </View>
@@ -152,7 +286,7 @@ export default function Financial(){
                     </View>
 
                     <View >
-                        <TouchableOpacity onPress={() => {} } /* Botão de proceguir */ >
+                        <TouchableOpacity onPress={() => authenticate() } /* Botão de proceguir */ >
                             <LinearGradient colors={['#81bd3c', '#629648', '#106b34']}
                                 start={[1.1, 1.9]} end={[0.2 , 1.1]} style={style.buttomTerminate} >
                                     {loading ? <ActivityIndicator size="small" color="#fff" />

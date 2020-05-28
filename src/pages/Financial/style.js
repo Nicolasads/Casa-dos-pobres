@@ -85,7 +85,7 @@ export default StyleSheet.create({
         paddingTop: 10,
         paddingLeft: 15,
         paddingLeft: 15,
-        flex: 2,
+        flex: 1,
         marginRight: 7,
     },
 
@@ -96,7 +96,7 @@ export default StyleSheet.create({
         backgroundColor: '#dedede',
         paddingLeft: 15,
         paddingTop:10,
-        flex: 1,
+        flex: 2,
     },
 
     //estilo do caampo item

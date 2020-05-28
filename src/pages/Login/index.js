@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StatusBar }
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
+import { TextInputMask } from 'react-native-masked-text';
 
 import styles from './style';
 import AuthContext from '../../contexts/authContext'
@@ -24,7 +25,7 @@ export default function Login() {
     setLoading(true);
     try {
       const credentials = {
-        cpf: login,
+        cpf: login.replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, ''),
         senha: pass
       };
       await signIn(credentials)
@@ -42,13 +43,14 @@ export default function Login() {
         <StatusBar barStyle="light-content"/>
       <Text style={styles.header}>Entrar</Text>
       <View style={styles.form}>
-        <TextInput style={styles.input}
+        <TextInputMask style={styles.input}
+          type={'cpf'}
           placeholder="CPF"
           placeholderTextColor="#999999"
           keyboardType="numeric"
           returnKeyType="next"
-          maxLength={11}
           onChangeText={(cpf) => setLogin(cpf)}
+          value={login}
           onSubmitEditing={() => passRef.current.focus()} />
         <MaterialCommunityIcons style={styles.formIcon} name="file-document-box-outline" size={24} color="#999999" />
       </View>

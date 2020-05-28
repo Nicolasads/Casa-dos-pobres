@@ -4,53 +4,42 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { TextInputMask } from 'react-native-masked-text'
 import { useNavigation } from "@react-navigation/native";
+
 import AuthContext from '../../contexts/authContext'
 import api from '../../services/api'
 import axios from 'axios'
-
 import style from './style';
 
 export default function Schedule() {
     const navigation = useNavigation();
 
 
-    const { deleteJwt, jwt } = useContext(AuthContext);
+    const { deleteJwt } = useContext(AuthContext);
 
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
     const [date, setDate] = useState('');
-    const [cep, setCep] = useState('');
     const [hour, setHour] = useState('');
     const [amount, setAmount] = useState('');
     const [item, setItem] = useState('');
     const [contact, setContatc] = useState('');
-    const [state, setState] = useState('');
-    const [city, setCity] = useState('');
+    const [cep, setCep] = useState('');
     const [street, setStreet] = useState('');
     const [neighborhood, setneighborhood] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
     const [number, setNumber] = useState('');
     const [complements, setComplemets] = useState('');
-
-
-    const crediacials = {
-        responsavel: name,
-        data: date,
-        cep: cep.replace("-", ''),
-        hora: hour,
-        quantidade: amount,
-        tipoDoacao: 2,
-        item: item,
-        telefone: contact.replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, ''),
-        estado: state,
-        cidade: city,
-        logradouro: street,
-        bairro: neighborhood,
-        nuemero: number,
-        referencia: complements
-    }
     
-    api.defaults.headers['x-api-key'] = "a"
-    const authenticate = async () => {  
+    const authenticate = async () => {
+        if(name === '' || date === '' || hour === '' || amount === '' ||
+            item === '' || contact === ''|| cep === '' || street === '' ||
+            neighborhood === '' || city === ''|| state === '' || number === ''
+            || complements === ''
+        ){
+            alert("Preencha os campos vazios")
+            return
+        }
         setLoading(true);
         try {
             const crediacials = {
@@ -59,7 +48,7 @@ export default function Schedule() {
                 cep: cep.replace("-", ''), 
                 hora: hour,
                 quantidade: amount,
-                tipoDoacao: 2,
+                tipoDoacao: 3,
                 item: item,
                 telefone: contact.replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, ''),
                 estado: state,
@@ -71,16 +60,16 @@ export default function Schedule() {
             }
             
             const response = await api.post('doacao/agendar', crediacials);
-            if (response.data) {
+            if (response.data.error) {
                 alert(JSON.stringify(response.data))
-            } else {
-                alert(response.data)
                 deleteJwt()
+            } else {
+                alert(JSON.stringify(response.data))
             }
 
             setLoading(false);
         } catch (e) {
-            console.log(e+"entrou cath");
+            console.log(e+"entrou no cath");
 
             //alert(e + " tente novamente")
             setLoading(false);
@@ -223,7 +212,7 @@ export default function Schedule() {
                                 placeholderTextColor='#999999'
                                 keyboardType="numeric"
                                 returnKeyType="next"
-                                onChangeText={text => cepApi(text)}
+                                onChangeText={(text) => cepApi(text)}
                                 value={cep}
                             />
                         </View>

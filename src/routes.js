@@ -30,6 +30,7 @@ export default () =>  {
         const token = await AsyncStorage.getItem('@CasaDosPobres:userToken') //pegando o tokendo do banco do celular
         
         if(token) {
+          api.defaults.headers['x-api-key'] = token
           setJwt(token)
           setLogged(true)
           
