@@ -17,6 +17,7 @@ import Forgot from './pages/Forgot';
 import Schedule from './pages/Schedule';
 import Financial from './pages/Financial';
 import Food from './pages/Food';
+import Info from './pages/Info';
 
 const AppStack = createStackNavigator();
 
@@ -52,6 +53,7 @@ export default () =>  {
                         <AppStack.Screen name="Schedule" component={Schedule} />
                         <AppStack.Screen name="Financial" component={Financial} />
                         <AppStack.Screen name="Food" component={Food} />
+                        <AppStack.Screen name="Info" component={Info} />
                     </>
                 ) :
                     <>

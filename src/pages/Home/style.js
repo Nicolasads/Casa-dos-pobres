@@ -66,5 +66,20 @@ export default StyleSheet.create({
     },
     scrollHorizontal:{
         marginRight: 12,
+    },
+    showInfo: {
+        flexDirection: 'row',
+        paddingTop: 3,
+        paddingBottom: 20
+    },
+    infoText: {
+        fontSize: 16,
+        color: "#717171",
+        marginRight: 6,
+    },
+    buttomInfo: {
+        fontSize: 16,
+        color: "#106b34",
+        fontWeight: '700'
     }
 });

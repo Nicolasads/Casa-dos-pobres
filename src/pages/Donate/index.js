@@ -40,7 +40,7 @@ export default function Donate(){
 
               <Text style={style.title}>Alimentícia</Text>
               <Text style={style.description}>Fique a vontade para doar alimentos diversos
-                                              de sua preferência.
+              de sua preferência.
               </Text>
                     
               <Text style={style.description}>E nós buscamos onde você estiver!</Text>
@@ -53,12 +53,12 @@ export default function Donate(){
               </View>
             </View>
 
-            <View style={[style.optionView, {marginLeft: 8, marginRight: 8}]}>
+            <View style={[style.optionView, {marginLeft: 8, marginRight: 18}]}>
               <Image source={require('../../assets/financeira.png')} style={style.financeira}/>
 
-              <Text style={style.title}>Financera</Text>
+              <Text style={style.title}>Financeira</Text>
               <Text style={style.description}>Doe a quantia que desejar, aquela que não lhe fará
-                                              falta.
+              falta.
               </Text>
                     
               <Text style={style.description}>E nós buscamos onde você estiver!</Text>
