@@ -25,8 +25,9 @@ export const AuthProvider = ({ children }) => { // passando o filhos para dentro
     async function saveUser(jwt = null) {
         try {
             if (jwt != null) {
-                await AsyncStorage.setItem('@CasaDosPobres:userToken', JSON.stringify(jwt))
+                await AsyncStorage.setItem('@CasaDosPobres:userToken', jwt)
                 setJwt(jwt)
+                api.defaults.headers['x-api-key'] = jwt
                 setLogged(true)
             } else {
                 alert(jwt)

@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AsyncStorage } from 'react-native'
+import api from './services/api'
 
 import AuthContext from '../src/contexts/authContext'
 // import { Container } from './styles';
@@ -28,8 +29,9 @@ export default () =>  {
         const token = await AsyncStorage.getItem('@CasaDosPobres:userToken') //pegando o tokendo do banco do celular
         
         if(token) {
-          setLogged(true)
           setJwt(token)
+          setLogged(true)
+          
         }
       } catch (e) {
         alert(e)

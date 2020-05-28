@@ -1,7 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://casadospobrescaruaru.ml/public/'
+  baseURL: 'https://casadospobrescaruaru.ml/public/',
+  headers: {
+    'Content-Type': 'application/json',
+  }
 });
 
 export default api;

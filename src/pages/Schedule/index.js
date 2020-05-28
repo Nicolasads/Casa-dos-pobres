@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import { View, Image, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Image, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, AsyncStorage } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { TextInputMask } from 'react-native-masked-text'
@@ -12,16 +12,9 @@ import style from './style';
 
 export default function Schedule() {
     const navigation = useNavigation();
-    const dataRef = useRef();
-    const horaRef = useRef();
-    const qtdRef = useRef();
-    const itemRef = useRef();
-    const numeroContatoRef = useRef();
-    const cepRef = useRef();
-    const numeroRef = useRef();
-    const complementoRef = useRef();
 
-    const {deleteJwt, jwt} = useContext(AuthContext);
+
+    const { deleteJwt, jwt } = useContext(AuthContext);
 
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
@@ -39,14 +32,25 @@ export default function Schedule() {
     const [complements, setComplemets] = useState('');
 
 
-
-
-    const authenticate = async () => {
-        // if (name.length === 0 || email.length === 0 || cpf.length === 0 || pass.length === 0) {
-        //   alert("Preencha os campos Vazios")
-        //   return
-        // }
-
+    const crediacials = {
+        responsavel: name,
+        data: date,
+        cep: cep.replace("-", ''),
+        hora: hour,
+        quantidade: amount,
+        tipoDoacao: 2,
+        item: item,
+        telefone: contact.replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, ''),
+        estado: state,
+        cidade: city,
+        logradouro: street,
+        bairro: neighborhood,
+        nuemero: number,
+        referencia: complements
+    }
+    
+    api.defaults.headers['x-api-key'] = "a"
+    const authenticate = async () => {  
         setLoading(true);
         try {
             const crediacials = {
@@ -65,24 +69,13 @@ export default function Schedule() {
                 nuemero: number,
                 referencia: complements
             }
-            const config = {
-                headers: {
-                'x-api-key' : jwt,
-                'Content-Type': 'application/json',
-                 Accept: 'application/json'}
-            }        
             
-            // alert(JSON.stringify(crediacials.telefone))
-            const response = await api.post('doacao/agendar', crediacials, config);
-
-            if (response.data.error) {
+            const response = await api.post('doacao/agendar', crediacials);
+            if (response.data) {
                 alert(JSON.stringify(response.data))
-                //deleteJwt()
             } else {
-                if (response.data) {
-                    alert(JSON.stringify(response.date.error + "ggg"))
-                    
-                }
+                alert(response.data)
+                deleteJwt()
             }
 
             setLoading(false);
@@ -93,8 +86,8 @@ export default function Schedule() {
             setLoading(false);
         }
 
-        // alert(JSON.stringify(crediacials))
     }
+
     async function cepApi(text) {
         try {
             let condition = text.length.toString();
@@ -110,7 +103,6 @@ export default function Schedule() {
                         setneighborhood(response.data.bairro)
                         setCity(response.data.localidade)
                         setState(response.data.uf)
-
                     }
                 }
 
@@ -142,7 +134,6 @@ export default function Schedule() {
                                 autoCapitalize="none"
                                 returnKeyType="next"
                                 onChangeText={(name) => setName(name)}
-                                onSubmitEditing={() => dataRef.current.focus()}
                             />
                         </View>
 
@@ -153,13 +144,11 @@ export default function Schedule() {
                                     options={{
                                         format: 'DD/MM/YYYY'
                                     }}
-                                    placeholder='Data'    
+                                    placeholder='Data'
                                     placeholderTextColor='#999999'
                                     returnKeyType="next"
                                     onChangeText={(date) => setDate(date)}
                                     value={date}
-                                    ref={dataRef}
-                                    onSubmitEditing={() => horaRef.current.focus()}
                                 />
                             </View>
 
@@ -174,9 +163,7 @@ export default function Schedule() {
                                     keyboardType="numeric"
                                     returnKeyType="next"
                                     value={hour}
-                                    ref={horaRef}
                                     onChangeText={(hour) => setHour(hour)}
-                                    //onSubmitEditing={() => qtdRef.current.focus()}
                                 />
                             </View>
 
@@ -186,9 +173,7 @@ export default function Schedule() {
                                     placeholderTextColor='#999999'
                                     keyboardType="numeric"
                                     returnKeyType="next"
-                                    ref={qtdRef}
                                     onChangeText={(qtd) => setAmount(qtd)}
-                                    onSubmitEditing={() => itemRef.current.focus()}
                                 />
                             </View>
                         </View>
@@ -203,8 +188,6 @@ export default function Schedule() {
                                 textAlignVertical="top"
                                 returnKeyType="next"
                                 onChangeText={(item) => setItem(item)}
-                                ref={itemRef}
-                                onSubmitEditing={() => numeroContatoRef.current.focus()}
                             />
                         </View>
 
@@ -220,7 +203,6 @@ export default function Schedule() {
                                 returnKeyType="next"
                                 onChangeText={(contact) => setContatc(contact)}
                                 value={contact}
-                                ref={numeroContatoRef}
                             />
                         </View>
                     </View>
@@ -243,8 +225,6 @@ export default function Schedule() {
                                 returnKeyType="next"
                                 onChangeText={text => cepApi(text)}
                                 value={cep}
-                                ref={cepRef}
-                                onSubmitEditing={() => numeroRef.current.focus()}
                             />
                         </View>
 
@@ -265,7 +245,7 @@ export default function Schedule() {
                                 placeholderTextColor='#999999'
                                 autoCapitalize="none"
                                 returnKeyType="next"
-                                onChangeText={(a) => setneighborhood(a) }
+                                onChangeText={(a) => setneighborhood(a)}
                                 value={neighborhood}
                             />
                         </View>
@@ -300,8 +280,6 @@ export default function Schedule() {
                                     keyboardType="numeric"
                                     returnKeyType="next"
                                     onChangeText={(number) => setNumber(number)}
-                                    ref={numeroRef}
-                                    onSubmitEditing={() => complementoRef.current.focus()}
                                 />
                             </View>
                         </View>
@@ -311,7 +289,6 @@ export default function Schedule() {
                                 placeholder='Complemento'
                                 placeholderTextColor='#999999'
                                 onChangeText={(comp) => setComplemets(comp)}
-                                ref={complementoRef}
                             />
                         </View>
                     </View>
