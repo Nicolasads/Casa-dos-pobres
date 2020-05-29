@@ -24,9 +24,20 @@ export default function Donate(){
     navigation.navigate('Schedule');
   }
 
+  function goBack(){
+    navigation.goBack('Home');
+  }
+
   return(
     <View style={style.container}>
-        <Image source={require('../../assets/logo-vertical.png')} style={style.logo} />
+
+        <View style={style.header}>
+          <TouchableOpacity style={style.backButtom} onPress={goBack}>
+              <MaterialIcons name="keyboard-arrow-left" size={45} color="#629648" />
+          </TouchableOpacity>
+
+          <Image source={require('../../assets/logo-vertical.png')} style={style.logo} />
+        </View>
 
         <Text style={style.textoTopo}>Arraste para o lado e selecione</Text>
         <Text style={style.textoTopo}> o tipo de agendamento</Text>

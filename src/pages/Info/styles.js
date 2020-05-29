@@ -1,22 +1,32 @@
-import { StyleSheet} from "react-native";
+import { StyleSheet, Dimensions} from "react-native";
 
+const { width: WIDTH } = Dimensions.get('window');
 
 export default StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     backButtom: {
         marginTop: 10,
         marginLeft: 2
     },
     logo: {
-        width: 350,
-        height: 80
+        width: 300,
+        height: 80,
+        resizeMode: 'contain'
     },
     header: {
        flexDirection: "row",
        marginTop: 20,
-       justifyContent: 'center'
+       justifyContent: 'center',
+       alignItems: 'center'
     },
     tutorial: {
         textAlign: 'center',
@@ -27,11 +37,17 @@ export default StyleSheet.create({
     arrow: {
         marginTop: 12,
     },
-    carousel: {
-        marginTop: 20,
+    content: {
+        flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
-        width: 360,
-        marginLeft: 12,
+    },
+    carousel: {
+        width: 340,
+        marginTop: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 6,
         borderRadius: 6,
         shadowColor: "#000",
         shadowOffset: {
@@ -53,11 +69,12 @@ export default StyleSheet.create({
         marginTop: 12,
         width: 330,
         height: 250,
-        borderRadius: 5
+        borderRadius: 5,
+        resizeMode: 'contain'
     },
     description: {
         marginTop: 10,
-        width: 320,
+        width: 300,
         textAlign: "left",
         marginBottom: 15,
         fontSize: 14,
@@ -65,6 +82,7 @@ export default StyleSheet.create({
     info: {
         alignItems: 'center',
         marginTop: 25,
+        width: WIDTH - 40
     },
     title: {
         fontSize: 20,
@@ -72,7 +90,9 @@ export default StyleSheet.create({
         color: '#629648'
     },
     information: {
-        flexDirection: "row",
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        flexDirection: 'row',
         marginTop: 8
     },
     headerInfo: {
@@ -81,8 +101,12 @@ export default StyleSheet.create({
         marginBottom: 8
     },  
     left: {
-    marginLeft: 4,
-    marginBottom: 25,
+        marginLeft: 4,
+        marginBottom: 25,
+    },
+    right: {
+        marginLeft: 4,
+        marginBottom: 25,  
     },
     desc: {
         width: 205

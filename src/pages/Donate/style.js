@@ -8,6 +8,18 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: "center",
     },
+
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    backButtom: {
+        marginTop: 10,
+        marginLeft: 2
+    },
+
     logo: {
         width: 300,
         height: 100,
