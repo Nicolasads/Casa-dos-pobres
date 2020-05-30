@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, AsyncStorag
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
+import { TextInputMask } from 'react-native-masked-text';
+
 
 import AuthContext from '../../contexts/authContext'
 import styles from './style';
@@ -48,7 +50,7 @@ export default function Register() {
         nome: name,
         email: email,
         senha: pass,
-        cpf: cpf
+        cpf: cpf.replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
       };
       const response = await api.post('doador/new', credentials);
       
@@ -96,12 +98,12 @@ export default function Register() {
           returnKeyType="next"
           ref={emailRef}
           onChangeText={(email) => setEmail(email)}
-          onSubmitEditing={() => cpfRef.current.focus()}
         />
         <MaterialCommunityIcons style={styles.formIcon} name="email" size={24} color="#999999" />
       </View>
       <View style={styles.form}>
-        <TextInput style={styles.input}
+        <TextInputMask style={styles.input}
+          type={'cpf'}
           placeholder="CPF"
           placeholderTextColor="#999999"
           keyboardType="numeric"
@@ -109,6 +111,7 @@ export default function Register() {
           maxLength={11}
           ref={cpfRef}
           onChangeText={(cpf) => setCpf(cpf)}
+          value={cpf}
           onSubmitEditing={() => passRef.current.focus()}
         />
         <MaterialCommunityIcons style={styles.formIcon} name="file-document-box-outline" size={24} color="#999999" />

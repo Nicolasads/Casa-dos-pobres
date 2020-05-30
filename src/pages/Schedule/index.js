@@ -79,6 +79,21 @@ export default function Schedule() {
 
     }
 
+    function hourValidation(text) {
+        let condition = text.length.toString()
+        setHour(text)
+        if (condition > 4) {
+            setHour(text)
+            let [h, m] = text.split(":")
+            let hora = Number(h)
+            let min = Number(m)
+            if (hora < 0 || hora > 23 || min < 0 || min > 59) {
+                alert(`horario invalido ${hora}:${min}`)
+            }
+        }
+
+    }
+
     async function cepApi(text) {
         try {
             let condition = text.length.toString();
@@ -154,7 +169,7 @@ export default function Schedule() {
                                     keyboardType="numeric"
                                     returnKeyType="next"
                                     value={hour}
-                                    onChangeText={(hour) => setHour(hour)}
+                                    onChangeText={(hour) => hourValidation(hour)}
                                 />
                             </View>
 
