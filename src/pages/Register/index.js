@@ -108,7 +108,6 @@ export default function Register() {
           placeholderTextColor="#999999"
           keyboardType="numeric"
           returnKeyType="next"
-          maxLength={11}
           ref={cpfRef}
           onChangeText={(cpf) => setCpf(cpf)}
           value={cpf}
