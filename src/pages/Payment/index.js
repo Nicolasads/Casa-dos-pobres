@@ -1,10 +1,12 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { Component } from 'react';
+import { WebView } from 'react-native-webview';
 
-// import { Container } from './styles';
-
-const Payment = () => {
-  return <View />;
+export default class Payment extends Component {
+  render() {
+    return (
+        <WebView
+          source={{ uri: 'https://pag.ae/7W3ViuXYR' }}
+        />
+    );
+  }
 }
-
-export default Payment;

@@ -42,7 +42,7 @@ export default function App(){
             </View>
             <View style={styles.carousel}>
               <Text style={styles.carouselText}>PARTICIPE VOCÊ TAMBÉM</Text>
-              <Image source={require('../../assets/img3.jpg')} style={[styles.image, {width: 300}]} />
+              <Image source={require('../../assets/img3.jpg')} style={styles.image} />
               <Text style={styles.description}>Temos diversas atividades que vão desde uma simples caminhada ou
                 uma festa em família, até viagens turisticas, que proporcionam o prazer
                 ao idoso, permitindo uma melhoria física e psicológica ao individuo
@@ -87,10 +87,7 @@ export default function App(){
                     <Text>
                       doacoes@casadospobres.com.br
                     </Text>
-              </View>
-
-              <View style={styles.right}>
-                <View style={styles.headerInfo}>
+                    <View style={styles.headerInfo}>
                     <Feather name="users" size={35} color="#629648" style={styles.headerIcon} />
                     <Text style={styles.headerTitle}>Atendimento</Text>
                 </View>
@@ -117,6 +114,7 @@ export default function App(){
                   81 3721 4325
                 </Text>
               </View>
+              
             </View>
           </View>
       </ScrollView>

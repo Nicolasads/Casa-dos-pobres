@@ -15,7 +15,6 @@ export default StyleSheet.create({
     },
     backButtom: {
         marginTop: 10,
-        marginLeft: 2
     },
     logo: {
         width: 300,
@@ -67,10 +66,9 @@ export default StyleSheet.create({
     },
     image: {
         marginTop: 12,
-        width: 330,
+        width: WIDTH - 70,
         height: 250,
         borderRadius: 5,
-        resizeMode: 'contain'
     },
     description: {
         marginTop: 10,
@@ -80,42 +78,36 @@ export default StyleSheet.create({
         fontSize: 14,
     },
     info: {
-        alignItems: 'center',
         marginTop: 25,
-        width: WIDTH - 40
     },
     title: {
         fontSize: 20,
         fontWeight: '700',
-        color: '#629648'
+        color: '#629648',
+        alignSelf: 'center'
     },
     information: {
-        flexWrap: 'wrap',
-        justifyContent: 'center',
         flexDirection: 'row',
-        marginTop: 8
+        marginTop: 12,
+        marginLeft: 8
     },
     headerInfo: {
-        flexDirection: 'row',
-        marginTop: 15,
-        marginBottom: 8
+        marginTop: 25,
+        marginBottom: 8,
+        flexDirection: "row"
     },  
     left: {
         marginLeft: 4,
         marginBottom: 25,
     },
-    right: {
-        marginLeft: 4,
-        marginBottom: 25,  
-    },
     desc: {
         width: 205
     },
     headerTitle: {
-        marginTop: 10,
-        marginLeft: 5,
         fontSize: 20,
-        color: "#629648"
+        color: "#629648",
+        marginLeft: 10,
+        marginTop: 5
     },
     highlight: {
         color: '#106b34',
