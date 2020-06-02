@@ -55,22 +55,20 @@ export default function Register() {
       const response = await api.post('doador/new', credentials);
       
       const usuario = response.data.usuario
-      //alert(JSON.stringify(usuario.jwt))
       
       await saveUser(usuario)  // salvar dados no AsyncStorage
       if (response.data.success) {
         alert(response.data.success)
-      } else {
-        if (response.data.error) {
-          alert(response.date.error)
-        }
       }
 
       setLoading(false);
     } catch (e) {
-      console.log(e);
-
-      alert(e + " tente novamente")
+      let error = e.response.data.error;
+          if(error){
+            alert(error)
+          }else{
+          alert(e)
+        }
       setLoading(false);
     }
   }

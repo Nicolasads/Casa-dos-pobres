@@ -2,26 +2,26 @@ import React, { createContext, useState } from 'react'
 import { AsyncStorage } from 'react-native'
 import api from '../services/api'
 
-const AuthContext = createContext({ logged: false, signIn: () => {}, setLogged: () => {}, setJwt: () => {}, jwt: "", deleteJwt: () => {}, setUser: () => {}, user: "" })
+const AuthContext = createContext({ logged: false, signIn: () => { }, setLogged: () => { }, setJwt: () => { }, jwt: "", deleteJwt: () => { }, setUser: () => { }, user: "" })
 
 export const AuthProvider = ({ children }) => { // passando o filhos para dentro do fx
     const [user, setUser] = useState(null)
     const [logged, setLogged] = useState(false)
-    const [ jwt, setJwt ] = useState('')
+    const [jwt, setJwt] = useState('')
 
-    async function deleteJwt(){ 
-            try {
-              await AsyncStorage.removeItem('@CasaDosPobres:userToken') //pegando o tokendo do banco do celular
-              const token = await AsyncStorage.getItem('@CasaDosPobres:userToken') //pegando o tokendo do banco do celular
-              
-              if(token == null) {
-                setLogged(false)    
-              }
-            } catch (e){
-              alert(e)
+    async function deleteJwt() {
+        try {
+            await AsyncStorage.removeItem('@CasaDosPobres:userToken') //pegando o tokendo do banco do celular
+            const token = await AsyncStorage.getItem('@CasaDosPobres:userToken') //pegando o tokendo do banco do celular
+
+            if (token == null) {
+                setLogged(false)
             }
+        } catch (e) {
+            alert(e)
+        }
     }
-    
+
     async function saveUser(jwt = null) {
         try {
             if (jwt != null) {
@@ -43,22 +43,19 @@ export const AuthProvider = ({ children }) => { // passando o filhos para dentro
             //setUser(response.data);
             if (response.data.jwt) {
                 await saveUser(response.data.jwt)  // salvar dados no AsyncStorage
-            } else {
-                if (response.data.error) {
-                    alert(response.data.error)
-                } else (
-                    alert(response.data)
-                )
             }
         } catch (e) {
-            console.log(e);
             let error = e.response.data.error;
-            alert(error + " tente novamente")
+            if(error){
+                alert(error)
+            }else{
+                alert(e)
+            }
         }
 
     }
     return (
-        <AuthContext.Provider value={{ logged, signIn, user, setLogged, setJwt, jwt, deleteJwt, setUser}}>
+        <AuthContext.Provider value={{ logged, signIn, user, setLogged, setJwt, jwt, deleteJwt, setUser }}>
             {children}
         </AuthContext.Provider>
     )

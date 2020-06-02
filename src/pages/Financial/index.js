@@ -13,7 +13,7 @@ import api from '../../services/api'
 
 export default function Financial() {
     const navigation = useNavigation();
-    const { deleteJwt, setUser } = useContext(AuthContext);
+    const { setUser } = useContext(AuthContext);
 
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
@@ -58,20 +58,19 @@ export default function Financial() {
                 referencia: complements
             }
             const response = await api.post('doacao/agendar', crediacials);
-            // alert(JSON.stringify(response.data))
-            if (response.data.error) {
-                alert(JSON.stringify(response.data.error))
-                deleteJwt()
-            } else {
+            if (response.data) {
                 setUser(response.data.agendamento.responsavel)
                 navigation.navigate('Finished')
             }
 
             setLoading(false);
         } catch (e) {
-            console.log(e + "entrou cath");
-
-            //alert(e + " tente novamente")
+            let error = e.response.data.error;
+            if (error) {
+                alert(error)
+            } else {
+                alert(e)
+            }
             setLoading(false);
         }
 
