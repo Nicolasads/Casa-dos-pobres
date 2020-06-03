@@ -32,7 +32,7 @@ export default () =>  {
           const response = await api.get('doador/check/login')
           if(response.data.success){
              setJwt(token)
-            setLogged(true)
+            setLogged(true) //colocando como logado
           }
         }
        } catch (e) {
