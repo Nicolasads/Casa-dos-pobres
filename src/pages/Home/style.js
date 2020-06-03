@@ -7,11 +7,17 @@ export default StyleSheet.create({
         flex: 1,
         alignItems: "center",
     },
+    header: {
+        flexDirection: "row"
+    },
     logo: {
         marginTop: 40,
         width: 330,
         height: 100,
     },
+    logout: {
+        marginTop: 15
+    },  
     optionView: {
        borderRadius: 0,
        marginTop: 12,

@@ -3,6 +3,7 @@ import { View, Image, Text, ScrollView, StatusBar } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 import styles from './style';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -32,10 +33,17 @@ export default function Home() {
 
   return(
     <ScrollView>
-      
+
     <View style={styles.container}>
     <StatusBar barStyle="light-content"/>
-      <Image source={require('../../assets/logo-vertical.png')} style={styles.logo} />
+      <View style={styles.header}>
+        <Image source={require('../../assets/logo-vertical.png')} style={styles.logo} />
+        <TouchableOpacity onPress={() => {}} style={styles.logout}>
+          <MaterialCommunityIcons name="logout" size={28} color="#106b34" />
+        </TouchableOpacity>
+      </View>
+     
+      
       <View style={styles.optionView}>
           <Image source={require('../../assets/dinehiro.png')} style={styles.money}/>
           <Text style={styles.title}>Em Dinheiro</Text>

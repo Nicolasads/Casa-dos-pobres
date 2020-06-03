@@ -17,8 +17,8 @@ export default StyleSheet.create({
         marginTop: 10,
     },
     logo: {
-        width: 300,
-        height: 80,
+        width: 320,
+        height: 95,
         resizeMode: 'contain'
     },
     header: {
