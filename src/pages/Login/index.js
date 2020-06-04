@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StatusBar } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StatusBar, Image } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -41,6 +41,7 @@ export default function Login() {
     
     <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
+      <Image source={require('../../assets/logo-vertical.png')} style={styles.logo} />
       <Text style={styles.header}>Entrar</Text>
       <View style={styles.form}>
         <TextInputMask style={styles.input}

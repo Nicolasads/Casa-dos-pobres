@@ -14,6 +14,11 @@ export default StyleSheet.create({
         color: '#6F9D3B',
         fontWeight: '700',
     },
+    logo: {
+        width: 335,
+        height: 80,
+        marginBottom: 30,
+    },  
     form: {
         paddingTop: 20,
     },

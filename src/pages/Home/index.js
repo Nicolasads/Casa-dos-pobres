@@ -58,7 +58,7 @@ export default function Home() {
       </View>
 
       <View style={styles.optionView}>
-          <Image source={require('../../../assets/outros.png')} style={styles.others}/>
+          <Image source={require('../../assets/outros.png')} style={styles.others}/>
 
           <Text style={styles.title}>Agendamento</Text>
           <Text style={styles.description}>Doe diversos tipos de produtos higiene,

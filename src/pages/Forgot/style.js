@@ -9,7 +9,7 @@ export default StyleSheet.create({
         paddingTop: 40,
     },  
     container: {
-        paddingTop: 60,
+        marginTop: 60,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#f1f1f1",

@@ -124,7 +124,7 @@ export default function Food(){
 
             <View style={style.container}>
 
-                <Image source={require('../../../assets/logo-vertical.png')} style={style.logo} /* Logo dp header */ />
+                <Image source={require('../../assets/logo-vertical.png')} style={style.logo} /* Logo dp header */ />
 
                 <View style={style.box} /* bloco 1 com informações da doação */>
                     <Text style={style.textBox}> Agendamento da doação </Text>
