@@ -29,7 +29,7 @@ export default function Login() {
       const response = await api.post('doador/recuperar/senha', credentials);
       if(response.data.success){
         alert(response.data.success)
-        // alert(email) 
+        navigation.navigate('Login')
       }
       setLoading(false);
     } catch (e) {
