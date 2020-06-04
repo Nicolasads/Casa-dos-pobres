@@ -19,7 +19,7 @@ export default StyleSheet.create({
         marginTop: 15
     },  
     optionView: {
-       borderRadius: 0,
+       borderRadius: 5,
        marginTop: 12,
        marginBottom: 20,
        width: WIDTH - 40,
@@ -28,6 +28,7 @@ export default StyleSheet.create({
        shadowOpacity: 0.25,
        shadowRadius: 2.5,
        elevation: 3,
+       backgroundColor: "#fff"
     },
     money: {
         marginTop: 15,

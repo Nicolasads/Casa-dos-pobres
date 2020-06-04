@@ -8,11 +8,6 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     backButtom: {
         marginTop: 10,
     },
@@ -55,7 +50,6 @@ export default StyleSheet.create({
         },
         shadowOpacity: 0.4,
         shadowRadius: 4,
-
         elevation: 5,
     },
     carouselText: {

@@ -17,11 +17,10 @@ export default StyleSheet.create({
 
     backButtom: {
         marginTop: 10,
-        marginLeft: 2
     },
 
     logo: {
-        width: 300,
+        width: 310,
         height: 100,
         resizeMode: 'contain',
         marginTop: 30,
@@ -34,7 +33,7 @@ export default StyleSheet.create({
     },
     optionView: {
         justifyContent: 'center',
-        borderRadius: 0,
+        borderRadius: 5,
         marginTop: 20,
         marginBottom: 40,
         width: WIDTH - 40,
@@ -44,6 +43,7 @@ export default StyleSheet.create({
         shadowRadius: 2.5,
         elevation: 3,
         marginRight: 12,
+        backgroundColor: "#fff"
      },
      title: {
         marginTop: 10,
@@ -62,7 +62,6 @@ export default StyleSheet.create({
     proceed: {
         marginTop: 10,
         marginLeft: 240,
-        marginBottom: 0
     },
     buttom: {
         backgroundColor: 'blue',

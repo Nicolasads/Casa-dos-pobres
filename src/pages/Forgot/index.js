@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Keyboard, TouchableWithoutFeedback} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform} from 'react-native';
 import { MaterialCommunityIcons, SimpleLineIcons } from "@expo/vector-icons";
 import {  useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -45,7 +45,7 @@ export default function Login() {
   
 
   return(
-    <View>
+    <KeyboardAvoidingView behavior={Platform.OS == 'android' ? "padding" : "height"} style={{flex: 1}}>
     <View style={styles.back}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
             <SimpleLineIcons name="arrow-left" size={24} color="#629648" />
@@ -86,6 +86,6 @@ export default function Login() {
       </View>
     </View>
     </TouchableWithoutFeedback>
-    </View>
+    </KeyboardAvoidingView>
   );
 }

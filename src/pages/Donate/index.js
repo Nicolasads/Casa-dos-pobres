@@ -33,7 +33,7 @@ export default function Donate(){
 
         <View style={style.header}>
           <TouchableOpacity style={style.backButtom} onPress={goBack}>
-              <MaterialIcons name="keyboard-arrow-left" size={45} color="#629648" />
+              <MaterialIcons name="keyboard-arrow-left" size={50} color="#629648" />
           </TouchableOpacity>
 
           <Image source={require('../../assets/logo-vertical.png')} style={style.logo} />
@@ -87,7 +87,7 @@ export default function Donate(){
 
               <Text style={style.title}>Outros</Text>
               <Text style={style.description}>Fique a vontade para doar diversos
-                                              tipos de produtos ou materiais de sua escolha.
+                tipos de produtos ou materiais de sua escolha.
               </Text>
                     
               <Text style={style.description}>E nós buscamos onde você estiver!</Text>
