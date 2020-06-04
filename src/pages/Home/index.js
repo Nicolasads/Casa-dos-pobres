@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { View, Image, Text, ScrollView, StatusBar } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import styles from './style';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import AuthContext from '../../contexts/authContext'
+
 
 export default function Home() {
   const navigation = useNavigation();
+  const { deleteJwt } = useContext(AuthContext)
 
   function goDonate(){ //vai para tela de registro de doação
     navigation.navigate('Donate');
@@ -22,14 +25,6 @@ export default function Home() {
   function goInfo() {
     navigation.navigate('Info');
   }
-  // async function deleteUser() {
-  //   try {
-  //     await AsyncStorage.setItem('@CasaDosPobres:userToken', null)
-
-  //   } catch (e) {
-  //     alert(e)
-  //   }
-  // }
 
   return(
     <ScrollView>
@@ -38,7 +33,7 @@ export default function Home() {
     <StatusBar barStyle="light-content"/>
       <View style={styles.header}>
         <Image source={require('../../assets/logo-vertical.png')} style={styles.logo} />
-        <TouchableOpacity onPress={() => {}} style={styles.logout}>
+        <TouchableOpacity onPress={() => deleteJwt()} style={styles.logout}>
           <MaterialCommunityIcons name="logout" size={28} color="#106b34" />
         </TouchableOpacity>
       </View>
