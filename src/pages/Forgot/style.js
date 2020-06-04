@@ -9,7 +9,7 @@ export default StyleSheet.create({
         paddingTop: 40,
     },  
     container: {
-        paddingTop: 110,
+        paddingTop: 60,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#f1f1f1",
@@ -25,7 +25,7 @@ export default StyleSheet.create({
         fontSize: 15
     },
     form: {
-        paddingTop: 20,
+        paddingTop: 15,
     },
     input: {
         borderColor: "#dedede",
@@ -39,7 +39,7 @@ export default StyleSheet.create({
     },
     formIcon: {
         position: "absolute",
-        top: 33,
+        top: 28,
         paddingLeft: 10,
     },
     submitButtom: {

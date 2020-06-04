@@ -129,7 +129,7 @@ export default function Register() {
         <TouchableOpacity style={styles.submitButtom} onPress={() => authenticate()}>
           <LinearGradient colors={['#81bd3c', '#629648', '#106b34']} start={[1.1, 1.9]} end={[0.2, 1.1]} style={styles.submit} >
             {loading ? <ActivityIndicator size="small" color="#fff" />
-              : <Text style={styles.submitText}>Entrar</Text>}
+              : <Text style={styles.submitText}>Cadastrar</Text>}
           </LinearGradient >
         </TouchableOpacity>
         <TouchableOpacity style={styles.register} onPress={() => navigation.navigate('Login')}>

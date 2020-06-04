@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import { MaterialCommunityIcons, SimpleLineIcons } from "@expo/vector-icons";
 import {  useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -29,7 +29,7 @@ export default function Login() {
       const response = await api.post('doador/recuperar/senha', credentials);
       if(response.data.success){
         alert(response.data.success)
-        // alert(email)
+        // alert(email) 
       }
       setLoading(false);
     } catch (e) {
@@ -51,6 +51,7 @@ export default function Login() {
             <SimpleLineIcons name="arrow-left" size={24} color="#629648" />
         </TouchableOpacity>
     </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
         <Text style={styles.header}>Esqueci minha senha</Text>
         <Text style={styles.description}>Informe abaixo as seguintes informações</Text>
@@ -84,6 +85,7 @@ export default function Login() {
         </TouchableOpacity>
       </View>
     </View>
+    </TouchableWithoutFeedback>
     </View>
   );
 }
