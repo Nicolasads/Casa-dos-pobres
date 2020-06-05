@@ -67,9 +67,9 @@ export default function Financial() {
         } catch (e) {
             let error = e.response.data.error;
             if (error) {
-                alert(error)
+                alert("Não possivel fazer o agendamento: " + error)
             } else {
-                alert(e)
+                alert("Não possivel fazer o agendamento: " + e)
             }
             setLoading(false);
         }

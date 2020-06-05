@@ -69,10 +69,10 @@ export default function Schedule() {
             setLoading(false);
         } catch (e) {
             let error = e.response.data.error;
-            if(error){
-                alert(error)
-            }else{
-                alert(e)
+            if (error) {
+                alert("Não possivel fazer o agendamento: " + error)
+            } else {
+                alert("Não possivel fazer o agendamento: " + e)
             }
             setLoading(false);
         }

@@ -64,11 +64,11 @@ export default function Register() {
       setLoading(false);
     } catch (e) {
       let error = e.response.data.error;
-          if(error){
-            alert(error)
-          }else{
-          alert(e)
-        }
+      if(error){
+        alert("Não possivel fazer o cadastro: "+ error)
+      }else{
+      alert("Não possivel fazer o cadastro: "+ e)
+    }
       setLoading(false);
     }
   }

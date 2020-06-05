@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AsyncStorage } from 'react-native'
+import NetInfo from '@react-native-community/netinfo';
 import api from './services/api'
 
 import AuthContext from '../src/contexts/authContext'
@@ -22,6 +23,11 @@ const AppStack = createStackNavigator();
 
 export default () =>  {
     const { logged, setLogged, setJwt, deleteJwt} = useContext(AuthContext)
+    const [internet, setInternet] = useState('')
+
+    NetInfo.fetch().then(state => {
+      setInternet(state.isConnected)
+    });
   
     const getData = async () => {
       try {
@@ -45,7 +51,11 @@ export default () =>  {
       }
     }
 
-    getData()
+    if(internet) {
+      getData()
+    }else{
+      alert("Verifique a sua conexão com a internet")
+    }
     
     return (
         <NavigationContainer>

@@ -47,9 +47,9 @@ export const AuthProvider = ({ children }) => { // passando o filhos para dentro
         } catch (e) {
             let error = e.response.data.error;
             if(error){
-                alert(error)
+                alert("Não foi possivel fazer o login: " + error)
             }else{
-                alert(e)
+                alert("Não foi possivel fazer o login: " + e)
             }
         }
 
