@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "CasaDosPobres",
+    "name": "Cabra do Bem",
     "slug": "CasaDosPobres",
     "platforms": [
       "ios",
@@ -21,6 +21,10 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.cabradobem.casadospobres",
+      "versionCode": 1
+    },
     "ios": {
       "supportsTablet": true
     }
