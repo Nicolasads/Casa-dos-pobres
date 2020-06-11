@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StatusBar, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StatusBar, Image, Alert } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -9,7 +9,7 @@ import styles from './style';
 import AuthContext from '../../contexts/authContext'
 
 export default function Login() {
-  const {signIn} = useContext(AuthContext)
+  const { signIn } = useContext(AuthContext)
   const navigation = useNavigation();
   const passRef = useRef();
   const [login, setLogin] = useState('');
@@ -18,8 +18,13 @@ export default function Login() {
 
   const authenticate = async () => {
     if (login.length === 0 || pass.length === 0) {
-      alert("Preencha os campos Vazios")
+      Alert.alert("ops", "Preencha os campos Vazios")
       return
+    } else {
+      if (login.length < 14) {
+        Alert.alert("CPF Invalida", "Exemplo de CPF: 008.180.760-03")
+        return
+      }
     }
 
     setLoading(true);
@@ -31,16 +36,15 @@ export default function Login() {
       await signIn(credentials)
       setLoading(false);
     } catch (e) {
-      console.log(e);
-      alert(e + " tente novamente")
+      console.log(e)
       setLoading(false);
     }
   }
 
   return (
-    
+
     <View style={styles.container}>
-        <StatusBar barStyle="light-content"/>
+      <StatusBar barStyle="light-content" />
       <Image source={require('../../assets/logo-vertical.png')} style={styles.logo} />
       <Text style={styles.header}>Entrar</Text>
       <View style={styles.form}>

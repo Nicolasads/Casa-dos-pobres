@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, AsyncStorage } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, AsyncStorage, Alert } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -21,27 +21,27 @@ export default function Register() {
   const [cpf, setCpf] = useState('');
   const [pass, setPass] = useState('');
   const [loading, setLoading] = useState(false);
- 
-
-
 
   async function saveUser(user) {
     try {
 
       await AsyncStorage.multiSet([
-        ['@CasaDosPobres:userToken', user.jwt],
-        // ['@CasaDosPobres:userId', JSON.stringify(user.id)],
-        // ['@CasaDosPobres:userName', JSON.stringify(user.nome)]
+        ['@CasaDosPobres:userToken', user.jwt]
       ])
       setLogged(true)
     } catch (e) {
-      alert("Erro ao salvar token" + e)
+      Alert.alert("Ops", "Erro ao salvar token")
     }
   }
   const authenticate = async () => {
     if (name.length === 0 || email.length === 0 || cpf.length === 0 || pass.length === 0) {
-      alert("Preencha os campos Vazios")
+      Alert.alert("Ops", "Preencha os campos Vazios")
       return
+    } else {
+      if (login.length < 14) {
+        Alert.alert("CPF Invalida", "Exemplo de CPF: 008.180.760-03")
+        return
+      }
     }
 
     setLoading(true);
@@ -53,22 +53,26 @@ export default function Register() {
         cpf: cpf.replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
       };
       const response = await api.post('doador/new', credentials);
-      
+
       const usuario = response.data.usuario
-      
+
       await saveUser(usuario)  // salvar dados no AsyncStorage
       if (response.data.success) {
-        alert(response.data.success)
+        Alert.alert("bem vindo", "Cadastro realizado com sucesso")
       }
 
       setLoading(false);
     } catch (e) {
       let error = e.response.data.error;
-      if(error){
-        alert("Não possivel fazer o cadastro: "+ error)
-      }else{
-      alert("Não possivel fazer o cadastro: "+ e)
-    }
+      if (error === "Este e-mail ou CPF já existe na base de dados") {
+        Alert.alert("Ops", "Não possivel fazer o cadastro, e-mail ou CPF já cadastrado")
+      } else {
+        if (error === "O e-mail enviado não é válido") {
+          Alert.alert("Ops", "E-mail digitado invalido")
+        } else {
+          Alert.alert("Ops", "Parece que houve um problema ao tentar fazer o agendamento. Tente novamente.")
+        }
+      }
       setLoading(false);
     }
   }

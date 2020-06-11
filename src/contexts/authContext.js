@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react'
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage, Alert } from 'react-native'
 import api from '../services/api'
 
 const AuthContext = createContext({ logged: false, signIn: () => { }, setLogged: () => { }, setJwt: () => { }, jwt: "", deleteJwt: () => { }, setUser: () => { }, user: "" })
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => { // passando o filhos para dentro
                 setLogged(false)
             }
         } catch (e) {
-            alert(e)
+            Alert.alert("Ops", "Parece que houve um Erro")
         }
     }
 
@@ -29,11 +29,9 @@ export const AuthProvider = ({ children }) => { // passando o filhos para dentro
                 setJwt(jwt)
                 api.defaults.headers['x-api-key'] = jwt
                 setLogged(true)
-            } else {
-                alert("Erro ao fazer login")
             }
         } catch (e) {
-            return alert("Erro ao salvar token" + e)
+            console.log(e)
         }
     }
 
@@ -46,10 +44,10 @@ export const AuthProvider = ({ children }) => { // passando o filhos para dentro
             }
         } catch (e) {
             let error = e.response.data.error;
-            if(error){
-                alert("Não foi possivel fazer o login: " + error)
+            if(error === "Acesso negado"){
+                Alert.alert("Ops","Senha ou e-mail informado invalido")
             }else{
-                alert("Não foi possivel fazer o login: " + e)
+                Alert.alert("Ops", "Parece que houve um problema ao tentar fazer o Login. Tente novamente.")
             }
         }
 

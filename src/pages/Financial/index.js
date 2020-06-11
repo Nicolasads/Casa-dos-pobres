@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Image, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Image, Text, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
@@ -36,8 +36,23 @@ export default function Financial() {
             neighborhood === '' || city === '' || state === '' || number === ''
             || complements === ''
         ) {
-            alert("Preencha os campos vazios")
+            Alert.alert("Ops", "Preencha os campos vazios")
             return
+        }else {
+            if (date.length < 10) {
+                Alert.alert("Data Invalida", "Exemplo de data: 20/06/2020")
+                return
+            } else {
+                if (hour.length < 5) {
+                    Alert.alert("Hora invalida", "Exemplo de Hora: 16:20")
+                    return
+                }else{
+                    if (contact.length < 14) {
+                        Alert.alert("Telefone Invalido", "Exemplo de contato: (81) 998156206")
+                        return
+                    }
+                }
+            }
         }
         setLoading(true);
         try {
@@ -67,9 +82,11 @@ export default function Financial() {
         } catch (e) {
             let error = e.response.data.error;
             if (error) {
-                alert("Não possivel fazer o agendamento: " + error)
+                if (error === "Data inválida") {
+                    Alert.alert("Ops", "Não foi possível fazer o agendamento. A data escolhida ja passou.")
+                }
             } else {
-                alert("Não possivel fazer o agendamento: " + e)
+                Alert.alert("Ops", "Parece que houve um problema ao tentar fazer o agendamento. Tente novamente.")
             }
             setLoading(false);
         }
@@ -85,7 +102,7 @@ export default function Financial() {
             let hora = Number(h)
             let min = Number(m)
             if (hora < 0 || hora > 23 || min < 0 || min > 59) {
-                alert(`horario invalido ${hora}:${min}`)
+                Alert.alert("Ops", `horario invalido ${hora}:${min}`)
             }
         }
 
@@ -99,7 +116,7 @@ export default function Financial() {
                 const response = await axios.get(`https://viacep.com.br/ws/${text}/json/ `)
                 setCep(text)
                 if (response.data.erro) {
-                    alert('Cep Invalido')
+                    Alert.alert("Ops", "Cep Invalido")
                 } else {
                     if (response.data) {
                         setStreet(response.data.logradouro)
@@ -111,7 +128,7 @@ export default function Financial() {
 
             }
         } catch (e) {
-            alert("erro ao procurar cep" + e)
+            Alert.alert("Ops", "Houve um erro ao procurar o cep: " + e)
         }
     }
     function goBack() {
