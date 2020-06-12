@@ -24,7 +24,6 @@ export default function Register() {
 
   async function saveUser(user) {
     try {
-
       await AsyncStorage.multiSet([
         ['@CasaDosPobres:userToken', user.jwt]
       ])
@@ -38,7 +37,7 @@ export default function Register() {
       Alert.alert("Ops", "Preencha os campos Vazios")
       return
     } else {
-      if (login.length < 14) {
+      if (cpf.length < 14) {
         Alert.alert("CPF Invalida", "Exemplo de CPF: 008.180.760-03")
         return
       }
