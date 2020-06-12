@@ -64,7 +64,7 @@ export default function Register() {
     } catch (e) {
       let error = e.response.data.error;
       if (error === "Este e-mail ou CPF já existe na base de dados") {
-        Alert.alert("Ops", "Não possivel fazer o cadastro, e-mail ou CPF já cadastrado")
+        Alert.alert("Ops", "Não foi possivel fazer o cadastro, e-mail ou CPF já cadastrado")
       } else {
         if (error === "O e-mail enviado não é válido") {
           Alert.alert("Ops", "E-mail digitado invalido")
