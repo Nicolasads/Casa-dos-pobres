@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, Alert} from 'react-native';
 import { MaterialCommunityIcons, SimpleLineIcons } from "@expo/vector-icons";
 import {  useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -16,8 +16,13 @@ export default function Login() {
 
   async function request() {
     if (email.length === 0 || cpf.length === 0) {
-      alert("Preencha os campos Vazios")
+      Alert.alert("Ops", "Preencha os campos vazios")
       return
+    }else{
+      if (cpf.length < 14) {
+        Alert.alert("CPF Invalida", "Exemplo de CPF: 008.180.760-03")
+        return
+      }
     }
 
     setLoading(true);
@@ -28,17 +33,23 @@ export default function Login() {
       };
       const response = await api.post('doador/recuperar/senha', credentials);
       if(response.data.success){
-        alert(response.data.success)
-        navigation.navigate('Login')
+        Alert.alert("Foi enviado com sucesso o para seu e-email")
+        // navigation.navigate('Login')
       }
       setLoading(false);
     } catch (e) {
       let error = e.response.data.error;
-          if(error){
-            alert(error)
-          }else{
-          alert(e)
-        }
+            if (error) {
+                if (error === "Erro ao recuperar a senha") {
+                    Alert.alert("Ops", "Parece que houve um problema ao tentar procurar pelo CPF ou e-mail, não existem na base de dados")
+                }
+            } else {
+              if(error === "Erro ao enviar e-mail"){
+                Alert.alert("Ops", "Parece que houve um problema ao tentar enviar o e-mail.")
+              }else{
+                Alert.alert("Ops", "Parece que houve um problema ao tentar recuperar a senha")
+              }
+            }
       setLoading(false);
     }
   }

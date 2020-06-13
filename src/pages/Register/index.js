@@ -24,7 +24,6 @@ export default function Register() {
 
   async function saveUser(user) {
     try {
-
       await AsyncStorage.multiSet([
         ['@CasaDosPobres:userToken', user.jwt]
       ])
@@ -38,7 +37,7 @@ export default function Register() {
       Alert.alert("Ops", "Preencha os campos Vazios")
       return
     } else {
-      if (login.length < 14) {
+      if (cpf.length < 14) {
         Alert.alert("CPF Invalida", "Exemplo de CPF: 008.180.760-03")
         return
       }
@@ -65,7 +64,7 @@ export default function Register() {
     } catch (e) {
       let error = e.response.data.error;
       if (error === "Este e-mail ou CPF já existe na base de dados") {
-        Alert.alert("Ops", "Não possivel fazer o cadastro, e-mail ou CPF já cadastrado")
+        Alert.alert("Ops", "Não foi possivel fazer o cadastro, e-mail ou CPF já cadastrado")
       } else {
         if (error === "O e-mail enviado não é válido") {
           Alert.alert("Ops", "E-mail digitado invalido")

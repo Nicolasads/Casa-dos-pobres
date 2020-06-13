@@ -76,7 +76,6 @@ export default function Food() {
                 setUser(response.data.agendamento.responsavel)
                 navigation.navigate('Finished')
             }
-
             setLoading(false);
         } catch (e) {
             let error = e.response.data.error;
