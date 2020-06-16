@@ -12,6 +12,10 @@ export default function App(){
         navigation.goBack();
     }
 
+    function goDev() {
+      navigation.navigate('Devs');
+    }
+
   return(
    <View style={styles.container}>
      <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
@@ -48,6 +52,13 @@ export default function App(){
                 ao idoso, permitindo uma melhoria física e psicológica ao individuo
                 </Text>
             </View>
+        </View>
+
+        <View style={styles.devBtn}>
+          <Text style={styles.devDesc}>Saiba mais sobre os </Text>
+          <TouchableOpacity onPress={goDev}>
+            <Text style={styles.devInfo}>Desenvolvedores do App</Text>
+          </TouchableOpacity>
         </View>
           
           <View style={styles.info}>

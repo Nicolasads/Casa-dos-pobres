@@ -71,6 +71,20 @@ export default StyleSheet.create({
         marginBottom: 15,
         fontSize: 14,
     },
+    devBtn: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginTop: 20,
+    },  
+    devDesc: {
+        fontSize: 16,
+        color: "#888"
+    },
+    devInfo: {
+        fontSize: 16,
+        color: '#106b34',
+        fontWeight: '700'
+    },
     info: {
         marginTop: 25,
     },
