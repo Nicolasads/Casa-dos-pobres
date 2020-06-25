@@ -37,7 +37,7 @@ export default function Devs() {
           <Text style={styles.name}>Everton Vilela de Sena Sá</Text>
           <Text style={styles.name}>Israel Italo Bernardo Cabral Silva</Text>
           <Text style={styles.name}>Victor Falcão Albuquerque de Melo</Text>
-          <Text style={styles.name}>Fhelipe Silva Freitas</Text>
+          <Text style={styles.name}>Prof. Fhelipe Silva Freitas</Text>
         </View>
 
         <View style={styles.document}>
@@ -49,7 +49,8 @@ export default function Devs() {
 
         <View style={styles.document}>
             <Text style={styles.title}>Gerente de Projetos</Text>
-            <Text style={styles.name}>José Marcones da Silva Lira</Text>
+            <Text style={styles.name}>Prof. José Marcones da Silva Lira</Text>
+            <Text style={styles.name}>Prof. José Antônio Almeida Silva</Text>
         </View>
       </View>
     </ScrollView>
